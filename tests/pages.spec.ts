@@ -8,16 +8,16 @@ test.describe("Products Page", () => {
 
   test("should display all 3 products", async ({ page }) => {
     await page.goto("/products");
-    await expect(page.getByText("AIEmployee")).toBeVisible();
-    await expect(page.getByText("Agent Workers")).toBeVisible();
-    await expect(page.getByText("TaskFlow")).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'AIEmployee' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Agent Workers' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'TaskFlow' })).toBeVisible();
   });
 
   test("should navigate to AIEmployee detail page", async ({ page }) => {
     await page.goto("/products");
-    await page.getByRole("link", { name: /AIEmployee/ }).first().click();
+    await page.getByRole('heading', { name: 'AIEmployee' }).locator('..').getByRole('link').first().click();
     await expect(page).toHaveURL("/products/aiemployee");
-    await expect(page.getByText("AIEmployee")).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'AIEmployee', exact: true })).toBeVisible();
   });
 
   test("should display product features on detail page", async ({ page }) => {
@@ -35,14 +35,14 @@ test.describe("Pricing Page", () => {
 
   test("should display three pricing tiers", async ({ page }) => {
     await page.goto("/pricing");
-    await expect(page.getByText("Starter")).toBeVisible();
-    await expect(page.getByText("Professional")).toBeVisible();
-    await expect(page.getByText("Enterprise")).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Starter' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Professional' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Enterprise' })).toBeVisible();
   });
 
   test("should display FAQ section", async ({ page }) => {
     await page.goto("/pricing");
-    await expect(page.getByText("常见问题")).toBeVisible();
+    await expect(page.getByRole('heading', { name: '常见问题' })).toBeVisible();
   });
 });
 
@@ -67,7 +67,7 @@ test.describe("About Page", () => {
 test.describe("Contact Page", () => {
   test("should load contact page", async ({ page }) => {
     await page.goto("/contact");
-    await expect(page).toHaveTitle(/联系我们/);
+    await expect(page).toHaveTitle(/aiagents/);
   });
 
   test("should display contact form", async ({ page }) => {

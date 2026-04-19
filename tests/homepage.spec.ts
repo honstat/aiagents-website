@@ -16,7 +16,7 @@ test.describe("Homepage", () => {
     await page.goto("/");
     const header = page.locator("header");
     await expect(header).toBeVisible();
-    await expect(page.getByText("aiagents")).toBeVisible();
+    await expect(page.getByRole('link', { name: 'a aiagents' })).toBeVisible();
   });
 
   test("should display footer", async ({ page }) => {
@@ -28,16 +28,16 @@ test.describe("Homepage", () => {
   test("should have navigation links", async ({ page }) => {
     await page.goto("/");
     await expect(page.getByRole("link", { name: "首页" })).toBeVisible();
-    await expect(page.getByRole("link", { name: "产品" })).toBeVisible();
-    await expect(page.getByRole("link", { name: "定价" })).toBeVisible();
-    await expect(page.getByRole("link", { name: "博客" })).toBeVisible();
+    await expect(page.getByRole("navigation").getByRole("link", { name: "产品", exact: true })).toBeVisible();
+    await expect(page.getByRole("navigation").getByRole("link", { name: "定价" })).toBeVisible();
+    await expect(page.getByRole("navigation").getByRole("link", { name: "博客" })).toBeVisible();
   });
 
   test("should display products section", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByText("AIEmployee")).toBeVisible();
-    await expect(page.getByText("Agent Workers")).toBeVisible();
-    await expect(page.getByText("TaskFlow")).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'AIEmployee' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Agent Workers' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'TaskFlow' })).toBeVisible();
   });
 
   test("should display testimonials section", async ({ page }) => {
@@ -54,7 +54,7 @@ test.describe("Homepage", () => {
 
   test("should navigate to pricing page", async ({ page }) => {
     await page.goto("/");
-    await page.getByRole("link", { name: "定价" }).click();
+    await page.getByRole("navigation").getByRole("link", { name: "定价" }).click();
     await expect(page).toHaveURL("/pricing");
     await expect(page.getByText("简单透明的定价")).toBeVisible();
   });
